@@ -1,0 +1,29 @@
+<h3 class="section-header">404: Oh no!</h3>
+<div class="container">
+	<h5 class="section-content">The link you followed doesn't exist. Make sure to check your spelling if you typed it in manually - 
+	either way, we're sure you can find what you were looking for.</h5>
+</div>
+<hr class="section-divider" />
+<div class="container">
+	<div class="row">
+		<div class="four columns">
+			<img src="images/optimist-best-in-kids.jpg" style="width:90%">
+		</div>
+	</div>
+</div>
+<hr class="section-divider" />
+<div class="container">
+	<h5 class="section-content">Need some help finding what you're looking for? Do a Google Search.</h5>
+	<form class="input-with-button centerable" action="https://www.google.com/search" method="get" id="search_form">
+		<input ontextchanged="onGoogleSearchTextUpdated()" type="text" class="small-text-input" id="search_term" />
+		<input type="submit" class="input-button" value=">" />
+	</form> 
+	<script>
+		function onGoogleSearchTextUpdated() {
+			var url = "https://www.google.com/search?q=" + 
+				encodeURIComponent(document.getElementById("search_term").value +  " site:" + document.location.host);
+				
+			document.getElementById("search_form").action = url;
+		}
+	</script>
+</div>
