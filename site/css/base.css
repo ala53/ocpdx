@@ -154,6 +154,7 @@
         .navbar-img-container {
             transition: width .2s linear, height .2s linear;
             width: 0px;
+			height: 0px;
             margin: auto;
             padding-top: 5px;
             padding-bottom: 5px;
@@ -243,6 +244,7 @@
 
             .navbar-img-container {
                 width: 75px;
+				height: auto;
             }
 			.navbar-link {
 			}
