@@ -1,38 +1,7 @@
 <html>
 <head>
 	<title>Northeast Portland Optimist Group</title>
-	<link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
-	<link rel="stylesheet" type="text/css" href="css/skeleton.css"></link>
-	<link rel="stylesheet" type="text/css" href="css/base.css"></link>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
-    <script>
-        window.onload = function () { document.body.style.opacity = 1; }
-        function onScroll() {
-            var pageArea = document.getElementById("pageArea");
-            var navbar = document.getElementById("navbar");
-            var navbarLayout = document.getElementById("navbar-layout");
-            var navbarImg = document.getElementById("navbar-img");
-            var navbarImgHidden = document.getElementById("navbar-img-hidden");
-            var rect = pageArea.getBoundingClientRect();
-            if (rect.top < 0) {
-                //The navbar needs to be fixed
-                navbar.style.position = 'fixed';
-                navbar.style.boxShadow = '0px 2px 6px 0px rgba(171,171,171,1)';
-                navbarLayout.style.height = '';
-                navbarLayout.className = '';
-                //navbarImg.style.width = '50px';
-                //navbarImgHidden.style.width = '50px';
-            }
-            else {
-                //navbar need not be fixed
-                navbar.style.position = 'relative';
-                navbar.style.boxShadow = '';
-                navbarLayout.style.height = '0px';
-                //navbarImg.style.width = '100px';
-                //navbarImgHidden.style.width = '100px';
-            }
-        }
-    </script>
 </head>
 <body onscroll="onScroll()" style="padding:0px;margin:0px; background-color:white;">
 	<div>
@@ -73,7 +42,38 @@
         <h4 class="bottom-copyright">Copyright (c) NE PDX Optimist Club, 2016. <a style="color:gray" href="mailto:ocpdx@zsbgames.me">Email us</a></h4>
 	</div>
 	
-	<!--Keep unimportant dependencies at the end to avoid pre-render overhead -->
+	<!--Keep dependencies at the end to avoid pre-render overhead -->
+    <script>
+        window.onload = function () { document.body.style.opacity = 1; }
+        function onScroll() {
+            var pageArea = document.getElementById("pageArea");
+            var navbar = document.getElementById("navbar");
+            var navbarLayout = document.getElementById("navbar-layout");
+            var navbarImg = document.getElementById("navbar-img");
+            var navbarImgHidden = document.getElementById("navbar-img-hidden");
+            var rect = pageArea.getBoundingClientRect();
+            if (rect.top < 0) {
+                //The navbar needs to be fixed
+                navbar.style.position = 'fixed';
+                navbar.style.boxShadow = '0px 2px 6px 0px rgba(171,171,171,1)';
+                navbarLayout.style.height = '';
+                navbarLayout.className = '';
+                //navbarImg.style.width = '50px';
+                //navbarImgHidden.style.width = '50px';
+            }
+            else {
+                //navbar need not be fixed
+                navbar.style.position = 'relative';
+                navbar.style.boxShadow = '';
+                navbarLayout.style.height = '0px';
+                //navbarImg.style.width = '100px';
+                //navbarImgHidden.style.width = '100px';
+            }
+        }
+    </script>
+	<link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
+	<link rel="stylesheet" type="text/css" href="css/skeleton.css"></link>
+	<link rel="stylesheet" type="text/css" href="css/base.css"></link>
 	<script src='js/prefixfree.min.js'/>
 	<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600' rel='stylesheet' type='text/css'>
 </body>
