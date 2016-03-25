@@ -1,1 +1,1 @@
-python compile.py ../template.html ../ ../site
+python compile.py ../site/template.html ../ ../site
