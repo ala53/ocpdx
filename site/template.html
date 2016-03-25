@@ -1,7 +1,17 @@
+<!DOCTYPE html>
 <html>
 <head>
-	<title>Northeast Portland Optimist Group</title>
+	<title>$$title$$ - Northeast Portland Optimist Group</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<!--Keep a tiny amount of navbar link styling inline so that it still works on dialup 
+	(otherwise, every link is smooshed together until the stylesheet loads)-->
+	<style>.navbar-link { margin-right: 2px; }</style>
+	<!--Meta tags for pretty preview-->
+	<meta name="description" content="The Northeast Portland Chapter of Optimist International, a charity dedicated to helping youth." />
+	<meta property="og:title" content="$$title$$ - Northeast Portland Optimist Group" />
+	<meta property="og:description" content="The Northeast Portland Chapter of Optimist International, a charity dedicated to helping youth." />
+	<meta property="og:image" content="images/optimist_logo.png" />
+	<link rel="shortcut icon" href="images/optimist_logo.png" type="image/x-icon" />
 </head>
 <body onscroll="onScroll()" style="padding:0px;margin:0px; background-color:white;">
 	<div>
@@ -19,12 +29,12 @@
                 </a>
             </div>
 			<div class="navbar-links-section">
-				<a class="navbar-link navbar-home-btn" href="index.html">Home</a>
-				<a class="navbar-link" href="upcoming.html">Upcoming events</a>
-				<a class="navbar-link" href="news.html">News</a>
-				<a class="navbar-link" href="meetings.html">Meeting Info</a>
-				<a class="navbar-link" href="contact.html">Contact</a>
-				<a class="navbar-link" href="donate.html">Donate</a>
+				<span><a class="navbar-link navbar-home-btn" href="index.html">Home</a></span>
+				<span><a class="navbar-link" href="upcoming.html">Upcoming events</a></span>
+				<span><a class="navbar-link" href="news.html">News</a></span>
+				<span><a class="navbar-link" href="meetings.html">Meeting Info</a></span>
+				<span><a class="navbar-link" href="contact.html">Contact</a></span>
+				<span><a class="navbar-link" href="donate.html">Donate</a></span>
 			</div>
         </div>
         <div id="navbar-layout" class="navbar-outer" style="visibility:hidden; height: 0px;">
@@ -32,7 +42,15 @@
                 <img class="navbar-img" src="images/optimist_logo.png" />
             </div>
 			<div class="navbar-links-section">
-				<a class="navbar-link" href="#">filler</a>
+				<!--The above link section needs to be kept in sync with this so that
+				the layout works on small screens without skipping around
+				-->
+				<span><a class="navbar-link navbar-home-btn" href="index.html">Home</a></span>
+				<span><a class="navbar-link" href="upcoming.html">Upcoming events</a></span>
+				<span><a class="navbar-link" href="news.html">News</a></span>
+				<span><a class="navbar-link" href="meetings.html">Meeting Info</a></span>
+				<span><a class="navbar-link" href="contact.html">Contact</a></span>
+				<span><a class="navbar-link" href="donate.html">Donate</a></span>
 			</div>
         </div>
 		<div class="">

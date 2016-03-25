@@ -45,8 +45,11 @@ def copyBinaryFile(outRoot, fileObj):
 def compressImage(outRoot, fileObj):
     outPath = os.path.join(outRoot, fileObj.subPath)
     outFile = os.path.join(outPath, fileObj.filename)
+    if not os.path.exists(outPath): os.mkdir(outPath)
     img = Image.open(fileObj.fullPath)
     img.save(outFile, quality = 80, optimize = True)
+    img.close()
+    
 def writeFile(minifiable, outRoot, data = None):
     if data == None: data = minifiable.data
     fileObj = minifiable.fileInfo
@@ -70,16 +73,40 @@ if len(sys.argv) < 4:
 
 #The global template
 htmlTemplate = readTextFile(sys.argv[1])
+htmlTemplateFile = os.path.abspath(sys.argv[1])
 if not "$$content$$" in htmlTemplate:
     print("Global template is missing $$content$$ marker")
     sys.exit(-1)
+if not "$$title$$" in htmlTemplate:
+    print("Global template is missing $$title$$ marker(s)")
+    sys.exit(-1)
+
+def injectIntoTemplate(text):
+    #If it doesn't want to be templated
+    if text.startswith("<!--NOTEMPLATE-->"): return text
+    text = str(text)
+    template = str(htmlTemplate)
+    #Tries to inject the specified data into the htmlTemplate
+    if text.startswith("$$title$$"):
+        #it has a title we need to extract first
+        asLines = text.splitlines(False)
+        titleLine = asLines[0]
+        #Skip the "$$title$$" part of the line
+        title = titleLine[len("$$title$$ "):]
+        template = template.replace("$$title$$", title)
+        #And put all the other lines back in order
+        text = "\n".join(asLines[1:])
+    else: template = template.replace("$$title$$", "") #No title, so just ignore iter
+    #and inject the content
+    template = template.replace("$$content$$", text)
+    return template
 
 #Where to output to
 outPath = os.path.abspath(sys.argv[2])
 
 #Clean out and recreate if it exists
 try:
-    #if os.path.exists(outPath): shutil.rmtree(outPath)
+    if os.path.exists(outPath): shutil.rmtree(outPath)
     if not os.path.exists(outPath): os.mkdir(outPath)
 except: pass
 
@@ -108,9 +135,12 @@ for arg in filenamesToScan:
         jsToRead[arg.fullPath] = Minifiable(readTextFile(arg.fullPath), arg)
         print("Minifying JS in " + arg.fullPath)
     elif fileExt == ".html" or fileExt == ".htm":
+        #Ignore the template file if this is it
+        if htmlTemplateFile == arg.fullPath:
+            print("Ignoring template file (" + arg.fullPath + ")")
+            continue
         text = str(readTextFile(arg.fullPath))
-        #Check if it should be injected into template or if it is standalone
-        if not text.startswith("<!--NOTEMPLATE-->"): text = str(htmlTemplate).replace("$$content$$", text)
+        text = injectIntoTemplate(text)
         htmlToRead[arg.fullPath] = Minifiable(text, arg)
         print("Minifying HTML for " + arg.fullPath)
     elif fileExt == ".png":
