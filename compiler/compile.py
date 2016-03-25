@@ -1,3 +1,7 @@
+#Configuration settings
+maxInliningTextSize = 15000 #Set to 0 to disable inlining, default = 15000
+shouldMinify = True
+
 import os
 import sys
 import shutil
@@ -130,10 +134,10 @@ for arg in filenamesToScan:
     fileExt = fileExt.lower()
     if fileExt == ".css":
         cssToRead[arg.fullPath] = Minifiable(readTextFile(arg.fullPath), arg)
-        print("Minifying CSS in " + arg.fullPath)
+        print("Found CSS in " + arg.fullPath)
     elif fileExt == ".js":
         jsToRead[arg.fullPath] = Minifiable(readTextFile(arg.fullPath), arg)
-        print("Minifying JS in " + arg.fullPath)
+        print("Found JS in " + arg.fullPath)
     elif fileExt == ".html" or fileExt == ".htm":
         #Ignore the template file if this is it
         if htmlTemplateFile == arg.fullPath:
@@ -142,26 +146,30 @@ for arg in filenamesToScan:
         text = str(readTextFile(arg.fullPath))
         text = injectIntoTemplate(text)
         htmlToRead[arg.fullPath] = Minifiable(text, arg)
-        print("Minifying HTML for " + arg.fullPath)
-    elif fileExt == ".png":
-        #Compress the (transparent) image
-        compressImage(outPath, arg)
-        print("Compressed and copied " + arg.fullPath)        
-    elif fileExt == ".jpg" or fileExt == ".jpeg":
+        print("Found HTML for " + arg.fullPath)
+    elif fileExt == ".png" or fileExt == ".jpg" or fileExt == ".jpeg":
         #Compress the image
-        compressImage(outPath, arg)
-        print("Compressed and copied " + arg.fullPath)
+        if shouldMinify: 
+            compressImage(outPath, arg)
+            print("Compressed and copied " + arg.fullPath)
+        else: 
+            copyBinaryFile(outPath, arg)
+            print("Copied " + arg.fullPath)
     else:
         copyBinaryFile(outPath, arg)
         print("Copied " + arg.fullPath)
 
 for minifiable in cssToRead.values():
     #Minify the css
-    minifiable.data = compress(minifiable.data)
+    if shouldMinify:
+        minifiable.data = compress(minifiable.data, 0, False)
+        print("Minified CSS in " + minifiable.fileInfo.fullPath)
     
 for minifiable in jsToRead.values():
     #Minify the js
-    minifiable.data = jsmin(minifiable.data)
+    if shouldMinify:
+        minifiable.data = jsmin(minifiable.data)
+        print("Minified JS in " + minifiable.fileInfo.fullPath)
 
 for minifiable in htmlToRead.values():
     print()
@@ -172,22 +180,27 @@ for minifiable in htmlToRead.values():
         scriptFile = js.get("src")
         if scriptFile == None: 
             #It's inline so just minify inline
-            js.string = jsmin(js.string)
+            if shouldMinify: js.string = jsmin(js.string)
             continue 
         resolved = os.path.abspath(os.path.join(minifiable.fileInfo.dir, scriptFile))
         if not resolved in jsToRead: 
             print("\t -> JS file not found: " + resolved + ", ignoring b/c probably not local file")
             continue
         resolvedJs = jsToRead[resolved]
-        if len(resolvedJs.data) > 15000: 
+        if len(resolvedJs.data) > maxInliningTextSize: 
             print("\t -> Not inlining " + resolved + ". Reason: too large")
             continue
         print("\t -> [Inlined] JS File: " + scriptFile + " resolved as " + resolved)
         #Remove the src tag
-        js['src'] = ""
+        js.attrs['src'] = None
         js.string = resolvedJs.data # + " /*JS from " + resolvedJs.fileInfo.fullPath + "*/"
         
         
+    #handle inline <style> tags
+    for css in parser.find_all("style"):
+        if shouldMinify: css.string = compress(css.string, 0, False)
+     
+    #And external ones   
     for css in parser.find_all("link"):
         scriptFile = css.get("href")
         if css.get('rel') != ["stylesheet"]: 
@@ -199,22 +212,29 @@ for minifiable in htmlToRead.values():
             print("\t -> CSS file not found: " + resolved + ", ignoring b/c probably not local file")
             continue
         resolvedCss = cssToRead[resolved]
-        if len(resolvedCss.data) > 15000: 
+        if len(resolvedCss.data) > maxInliningTextSize: 
             print("\t -> Not inlining " + resolved + ". Reason: too large")
             continue
         print("\t -> [Inlined] CSS File: " + scriptFile + " resolved as " + resolved)
         #Switch from link to style
-        css['href'] = ""
+        css.attrs['href'] = None
         css.name = "style"
-        css['rel'] = ""
-        css['type'] = ""
+        css.attrs['rel'] = None
+        css.attrs['type'] = None
         css.string = resolvedCss.data
+    
+    #Finally, inline and minify the HTML
     minifiable.inlined = str(parser)  
-    mf = Minifier(True, True, True, True, True, True, True)
-    minifiable.data = mf.minify(minifiable.inlined)   
+    if shouldMinify:
+        mf = Minifier(True, True, True, True, True, True, True)
+        minifiable.data = mf.minify(minifiable.inlined)   
+        print("Minified HTML in " + minifiable.fileInfo.fullPath)
+    else: minifiable.data = minifiable.inlined
 
 for f in cssToRead.values(): writeFile(f, outPath)
 for f in jsToRead.values(): writeFile(f, outPath)
 for f in htmlToRead.values(): writeFile(f, outPath)
 
 print("Compiled to " + outPath)
+if not shouldMinify: print("[WARNING] Minification was disabled, do not use in production")
+if maxInliningTextSize == 0: print("[WARNING] JS/CSS inlining was disabled, do not use in production")
