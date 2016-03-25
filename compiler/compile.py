@@ -1,6 +1,8 @@
 import os
 import sys
 import shutil
+#PNG compressor
+from PIL import Image
 
 # Add the current directory to PATH so we can load the local packages
 compilerDir = os.path.dirname(os.path.abspath(__file__))
@@ -39,7 +41,12 @@ def copyBinaryFile(outRoot, fileObj):
     outFile = os.path.join(outPath, fileObj.filename)
     if not os.path.exists(outPath): os.mkdir(outPath)
     shutil.copyfile(fileObj.fullPath, outFile)
-    
+
+def compressImage(outRoot, fileObj):
+    outPath = os.path.join(outRoot, fileObj.subPath)
+    outFile = os.path.join(outPath, fileObj.filename)
+    img = Image.open(fileObj.fullPath)
+    img.save(outFile, quality = 80, optimize = True)
 def writeFile(minifiable, outRoot, data = None):
     if data == None: data = minifiable.data
     fileObj = minifiable.fileInfo
@@ -106,7 +113,15 @@ for arg in filenamesToScan:
         if not text.startswith("<!--NOTEMPLATE-->"): text = str(htmlTemplate).replace("$$content$$", text)
         htmlToRead[arg.fullPath] = Minifiable(text, arg)
         print("Minifying HTML for " + arg.fullPath)
-    else: #if fileExt == ".png" or fileExt == ".jpg" or fileExt == ".gif" or fileExt == ".jpeg" or fileExt == ".ico":
+    elif fileExt == ".png":
+        #Compress the (transparent) image
+        compressImage(outPath, arg)
+        print("Compressed and copied " + arg.fullPath)        
+    elif fileExt == ".jpg" or fileExt == ".jpeg":
+        #Compress the image
+        compressImage(outPath, arg)
+        print("Compressed and copied " + arg.fullPath)
+    else:
         copyBinaryFile(outPath, arg)
         print("Copied " + arg.fullPath)
 
