@@ -186,15 +186,13 @@
 
         .input-with-button {
             width: 90%;
-            max-width: 450px;
+            max-width: 500px;
         }
 
         .input-button {
             display: inline-block;
             font-size: 2em;
-            width: 10%;
-            max-width: 50px;
-            margin-left: -5px;
+			max-width: 90px;
             padding-top: 1px;
             padding-bottom: 1px;
             padding-left: 10px;
@@ -217,7 +215,7 @@
             display: inline-block;
             margin: 0;
             font-size: 2em;
-            max-width: 400px;
+            max-width: 390px;
             margin-right: 0px;
             border-top-left-radius: 6px;
             border: 1px solid darkgray;
