@@ -174,7 +174,7 @@
         .navbar-img {
             transition: transform .8s ease-in-out;
             width: 75px;
-			height: 87px;
+			height: 87px; /*Change height to be proportional when changing header image*/
 			display: inline;
         }
 
@@ -244,7 +244,7 @@
             }
 			
 			.navbar-img-container {
-				width: auto;
+				width: 75px;
 				height: auto;
 			}
 			
