@@ -173,7 +173,8 @@
 		}
         .navbar-img {
             transition: transform .8s ease-in-out;
-            width: 100%;
+            width: 75px;
+			height: 87px;
 			display: inline;
         }
 
@@ -241,11 +242,12 @@
             .text-content {
                 max-width: 70%;
             }
-
-            .navbar-img-container {
-                width: 75px;
-				height: 87px; /*Change this if changing header logo!!!!!*/
-            }
+			
+			.navbar-img-container {
+				width: auto;
+				height: auto;
+			}
+			
 			.navbar-link {
 			}
 
