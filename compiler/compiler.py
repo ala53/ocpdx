@@ -328,6 +328,7 @@ class Template:
             js.string = resolvedJs
 
         as_str = str(parser)
+
         #If we should minify...
         if minify: 
             minifier = Minifier(True, True, True, True, True, True, True)
