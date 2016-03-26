@@ -1,11 +1,30 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
 <head>
 	<title>$$title$$ - Northeast Portland Optimist Group</title>
 	<meta name="viewport" content="height=device-height, width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
 	<!--Keep a tiny amount of navbar link styling inline so that it still works on dialup 
 	(otherwise, every link is smooshed together until the stylesheet loads)-->
-	<style>.navbar-link { margin-right: 2px; margin-left: 2px; }</style>
+	<style>
+	.navbar-link { 
+		margin-right: 2px; margin-left: 2px; 
+	}
+	.doc-no-js {}
+	
+	.doc-js {
+		display: none;
+	}
+	</style>
+	<!--If JS is enabled, hide the document until we've loaded it-->
+	<script>
+		//Switch document header to .js
+		(function(H) {
+			H.className=H.className.replace(/\bdoc-no-js\b/,'doc-js')
+		})(document.documentElement);
+		document.onload = function(){
+			document.documentElement.className = ""; //Clear the class name
+		}
+	</script>
 	<!--Meta tags for pretty preview-->
 	<meta name="description" content="The Northeast Portland Chapter of Optimist International, a charity dedicated to helping youth." />
 	<meta property="og:title" content="$$title$$ - Northeast Portland Optimist Group" />
