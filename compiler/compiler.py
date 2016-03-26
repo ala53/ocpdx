@@ -255,7 +255,7 @@ class Template:
             contentAsStr = ""
             if isinstance(content, list): #If it's a list, we need to stringify everything in it
                 for it in content:
-                    contentAsStr += str(content)
+                    contentAsStr += str(it)
             else: contentAsStr = str(content)
 
             text = text.replace(block, contentAsStr)
