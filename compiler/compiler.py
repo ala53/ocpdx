@@ -296,9 +296,9 @@ class Template:
             #Switch from link to style
             css.name = "style"
             #Clear attributes
-            css.attrs['href'] = None
-            css.attrs['rel'] = None
-            css.attrs['type'] = None
+            del css['href']
+            del css['type']
+            del css['rel']
             #And inject data
             css.string = resolvedCss
 
@@ -323,7 +323,7 @@ class Template:
             #print("\t -> [Inlined] JS File: " + scriptFile + " resolved as " +
             #resolved)
             #Remove the src tag
-            js.attrs['src'] = None
+            del js['src']
             #And inject inline
             js.string = resolvedJs
 
