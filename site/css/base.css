@@ -5,7 +5,7 @@
         }
 		
 		.sis-charity-links {
-			transition: all 200ms ease;
+			transition: opacity 200ms ease;
 		}
 		
 		.silent-link {
@@ -139,7 +139,7 @@
 			color: gray;
 			padding-left: 1rem;
 			padding-right: 1rem;
-			display: inline-block;
+			display: inline-block
 		}
 			.navbar-link:hover {
 				color: darkgray;
