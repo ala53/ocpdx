@@ -4,6 +4,10 @@
             overflow-x: hidden;
         }
 		
+		.sis-charity-links {
+			transition: opacity 200ms ease;
+		}
+		
 		.silent-link {
 			color: black;
 		}
@@ -49,13 +53,18 @@
 			font-size: 1.2em;
 		}
 
-		.large-header {
+		.header-pre {
 			margin-top: 4rem;
+		}
+		.header-post {
+			margin-bottom: 3rem;
+		}
+		
+		.large-header {
 			text-align: center;
 		}
 		
 		.large-subheader {
-			margin-bottom: 4rem;
 			text-align: center;
 		}
 		
@@ -130,6 +139,7 @@
 			color: gray;
 			padding-left: 1rem;
 			padding-right: 1rem;
+			display: inline-block
 		}
 			.navbar-link:hover {
 				color: darkgray;

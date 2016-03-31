@@ -337,6 +337,7 @@ class Template:
         #And save
         f = open(output_path.full_path, "wb")
         print("[Saved] " + output_path.full_path)
+        f.write(u'\ufeff'.encode("utf8", "ignore"))
         f.write(as_str.encode("utf8", "ignore"))
         f.flush()
         f.close()

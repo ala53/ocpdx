@@ -20,22 +20,30 @@
 	<link rel="stylesheet" type="text/css" href="css/normalize.css"></link>
 	<link rel="stylesheet" type="text/css" href="css/skeleton.css"></link>
 	<link rel="stylesheet" type="text/css" href="css/base.css"></link>
-	<link href='//fonts.googleapis.com/css?family=Raleway:400,300,600 ' rel='stylesheet' type='text/css'>
+	<link href='http://fonts.googleapis.com/css?family=Raleway:400,300,600 ' rel='stylesheet' type='text/css'>
 </head>
 <body onscroll="onScroll()" style="padding:0px;margin:0px; background-color:white;">
 	<div>
 		<!-- Global header text goes here -->
 		<section class="header">
+			<div class="header-pre"></div>
 			<h1 class="large-header">Northeast Portland Optimist Group</h1>
 			<h4 class="large-subheader">Bringing Out the Best in Kids!</h4>
 			<div class="navbar-links-section" style="padding: 5px;">
-				<span><a class="navbar-link navbar-home-btn" href="index.html">Home</a></span>
-				<span><a class="navbar-link" href="upcoming.html">Upcoming events</a></span>
-				<span><a class="navbar-link" href="news.html">News</a></span>
-				<span><a class="navbar-link" href="meetings.html">Meeting Info</a></span>
-				<span><a class="navbar-link" href="contact.html">Contact</a></span>
-				<span><a class="navbar-link" href="donate.html">Donate</a></span>
+				<div style="padding-bottom:5px;">
+					<span><a class="navbar-link" href="http://optimist.org">Optimist International</a></span> 
+					<span><a id="open-sis-char-links" href="#" class="navbar-link">&darr; Charities We Support &darr;</a></span>
+					<span><a class="navbar-link" href="http://www.pnwdistrictoptimist.com/">PNW Optimist District</a></span> 
+				</div>
+				<div id="sister-charity-links" class="sis-charity-links">
+					<span><a class="navbar-link" href="http://www.4kidswithcancer.org">Candlelighters</a></span>
+					<span><a class="navbar-link" href="http://rmhcoregon.org">Ronald McDonald House Charities</a></span>
+					<span><a class="navbar-link" href="http://www.rahusa.us">Remembering America's Heroes</a></span>
+					<span><a class="navbar-link" href="http://www.google.com">Ken Lee's Basketball League</a></span>
+					<span><a class="navbar-link" href="http://www.kidsfitfoundation.org">Kids Fit Foundation</a></span>
+				</div>
 			</div>
+			<div class="header-post"></div>
 		</section>
 	</div>
     <div id="pageArea" style="background-color:white">
@@ -52,6 +60,7 @@
 				<span><a class="navbar-link" href="meetings.html">Meeting Info</a></span>
 				<span><a class="navbar-link" href="contact.html">Contact</a></span>
 				<span><a class="navbar-link" href="donate.html">Donate</a></span>
+				<span><a class="navbar-link" href="fundraising.html">Fundraising</a></span>
 			</div>
         </div>
         <div id="navbar-layout" class="navbar-outer" style="visibility:hidden; height: 0px;">
@@ -68,6 +77,7 @@
 				<span><a class="navbar-link">Meeting Info</a></span>
 				<span><a class="navbar-link">Contact</a></span>
 				<span><a class="navbar-link">Donate</a></span>
+				<span><a class="navbar-link" href="fundraising.html">Fundraising</a></span>
 			</div>
         </div>
 		<div>
@@ -79,7 +89,6 @@
 	
 	<!--Keep dependencies at the end to avoid pre-render overhead -->
     <script>
-        window.onload = function () { document.body.style.opacity = 1; }
         function onScroll() {
             var pageArea = document.getElementById("pageArea");
             var navbar = document.getElementById("navbar");
@@ -106,6 +115,32 @@
             }
         }
     </script>
+		<script>
+			(function() {
+				var sisLink = document.getElementById("open-sis-char-links");
+				var links = document.getElementById("sister-charity-links");
+				var isOpen = false;
+				
+				sisLink.addEventListener("click", function(event) {
+					if (isOpen) {
+						sisLink.innerHTML = "&darr; Charities We Support &darr;";
+						links.style.opacity = "0";
+						links.style.height = "0px";
+					}
+					else {
+						sisLink.innerHTML = "&uarr; Charities We Support &uarr;";
+						links.style.opacity = 1;
+						links.style.height = "auto";
+					}
+					isOpen = !isOpen;
+					event.preventDefault()
+				})
+				//And close it if JS is enabled
+				sisLink.innerHtml = "&darr; Charities We Support &darr;";
+				links.style.opacity = "0";
+				links.style.height = "0px";
+			})()
+		</script>
 	<script src='js/prefixfree.min.js'/>
 </body>
 </html>
