@@ -19,7 +19,8 @@ def compile(c):
         ["News", "news.html"],
         ["News Editor", "news_editor.html"],
         ["Oratorical Contest", "oratorical.html"],
-        ["Upcoming Events", "upcoming.html"]
+        ["Upcoming Events", "upcoming.html"],
+        ["Fundraising", "fundraising.html"]
     ]
     for files in simple_files:
         template.copy().inject("title", files[0]).inject("content", c.template(files[1])).save(files[1], True)
