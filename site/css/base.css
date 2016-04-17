@@ -72,6 +72,11 @@
 			font-size: 1.2em;
 		}
 
+        .header-background {
+            background-image: url("images/candlelighters_group.jpg");
+            background-size: 100%;
+        }
+
 		.header-pre {
 			margin-top: 4rem;
 		}
