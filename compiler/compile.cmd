@@ -1,5 +1,5 @@
-python pip install Pillow
-echo python compile.py
+pip install Pillow
+python compile.py
 
 echo Compiled
 pause

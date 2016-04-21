@@ -308,3 +308,4 @@ pip-log.txt
 compiler/__pycache__/compiler.cpython-35.pyc
 *.pyc
 compiler/jsmin/__pycache__/__init__.cpython-35.pyc
+*.pyc
