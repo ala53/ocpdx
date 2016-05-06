@@ -27,8 +27,8 @@ class _TemplateBlock:
 
 def _loadTemplate(filename):
     """Loads the template and gets a list of all the 'block' names in it"""
-    f = open(filename, "r")
-    rawHtml = str(f.read())
+    f = open(filename, "rb")
+    rawHtml = f.read().decode('utf8', errors='ignore')
     f.close()
     
     blocks = dict()
