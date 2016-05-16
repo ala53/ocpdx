@@ -1,17 +1,19 @@
 <!--Special extension-->
 <style>
-	.calendar-date { 
+	.calendar-box {
 		text-align: center;
+		margin-bottom: 1rem;
+	}
+	.calendar-date { 
 		color: gray;
 		display: inline-block;
 		padding-right:0px;
 		margin-right:0px;
 	}
 		.calendar-date::after {
-			content: " | ";
+			content: " |&nbsp;";
 		}
 	.calendar-info {
-		text-align: center;
 		display: inline-block;
 		color: black;
 		padding-left:0px;
@@ -26,9 +28,6 @@
 		.calendar-info:hover {
 			color: black;
 		}
-	.calendar-spacer {
-		margin-bottom: 1rem;
-	}
 </style>
 <h3 class="section-header">Yearly Contests</h3>
 <div class="container">
@@ -56,7 +55,8 @@
 <hr class="section-divider" />
 <h3 class="section-header">Event Calendar</h3>
 <div class="container">
-	<h5 class="calendar-date">June 25th - Lunch from 11am to 1pm</h5>
-	<h5 class="calendar-info"><a href="barbecue.html">Optimist Kids Day at Oaks Park</a></h5>
-	<div class="calendar-spacer"></div>
+	<div class="calendar-box">
+		<h5 class="calendar-date">June 25th - Lunch from 11am to 1pm</h5>
+		<h5 class="calendar-info"><a href="barbecue.html">Optimist Kids Day at Oaks Park</a></h5>
+	</div>
 </div>
