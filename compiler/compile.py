@@ -11,16 +11,15 @@ def compile(compiler):
     # And map all the HTML files
     # Files that don't need special treatment
     simple_files = [ 
+        #404 page generated separately
         ["Yearly Barbecue", "barbecue.html"],
         ["Contact Us", "contact.html"],
         ["Donate", "donate.html"],
-        ["Essay Contest", "essay.html"],
+        ["Fundraising", "fundraising.html"],
         ["Home", "index.html"],
         ["Meeting Information", "meetings.html"],
-        ["News Editor", "news_editor.html"],
-        ["Oratorical Contest", "oratorical.html"],
-        ["Upcoming Events", "upcoming.html"],
-        ["Fundraising", "fundraising.html"]
+        ["News Editor", "news_editor.html"], #To actually be implemented...
+        ["Upcoming Events", "upcoming.html"]
     ]
     for files in simple_files:
         template.copy().inject("title", files[0]).inject("content", compiler.template(files[1])).save(files[1], True)
