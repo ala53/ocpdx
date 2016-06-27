@@ -6,7 +6,7 @@ def compile(compiler):
     template = compiler.template("template.html")
     compiler.load_and_copy_css(minify = True)
     compiler.load_and_copy_js(minify = True)
-    compiler.copy_images(minify = True) # Compresses images and copy
+    compiler.copy_images(minify = True, sizes = [100, 200, 300, 400, 600, 800]) # Compresses images and copy
     compiler.copy_unknown_files() # Copies all files that don't end in .js, .css, .png, .jpg, or .html
     # And map all the HTML files
     # Files that don't need special treatment

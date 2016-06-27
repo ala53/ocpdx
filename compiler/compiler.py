@@ -18,6 +18,10 @@ from jsmin import jsmin
 compilerDir = os.path.dirname(os.path.abspath(__file__))
 sys.path.append(compilerDir)
 
+#quick logging helper
+def compile_log(text):
+    print(text)
+
 class _TemplateBlock:
     def __init__(self, name, preamble):
         self.name = name
@@ -163,6 +167,7 @@ class Compiler:
         return os.path.abspath(os.path.join(self.out_path, name))
     def get_files(self):
         """Finds all the files in the input directory and maps them to their output filenames"""
+        compile_log("Searching for files in: " + self.in_path)
         file_set = []
         for spath, subdirs, files in os.walk(self.in_path):
             for name in files:
@@ -181,7 +186,7 @@ class Compiler:
                     file_set.append(FileObject(FileType.png, fullPath, self))
                 else:
                     file_set.append(FileObject(FileType.other, fullPath, self))
-
+        compile_log("\tComplete!")
         return file_set
     def load_and_copy_css(self, minify=True):
         """Loads the CSS files, minifies them if requested, and copies them to the output directory"""
@@ -201,26 +206,52 @@ class Compiler:
                 if minify: js = jsmin(js)
                 file.write_to_output(js) # Save it to output dir
                 self.js_cache[file.get_filename()] = js # And cache it
-    def copy_images(self, minify=True):
+    def copy_images(self, minify=True, sizes=[]):
         """Loads the images (png, jpg), compresses them if requested, and copies to output directory"""
         files = self.get_files()
         for file in files:
             if file.type == FileType.png or file.type == FileType.jpg:
+                compile_log("Processing image: " + file.get_filename())
                 if not minify:
                     file.copy_to_output()
                     continue
                 img = Image.open(file.get_filename())
                 file.ensure_dirs_exist()
-                img.save(file.get_output_filename(), quality = 80, optimize = True)
+
+                #Skip if already processed
+                if not os.path.isfile(file.get_output_filename()):
+                    img.save(file.get_output_filename(), quality = 80, optimize = True)
+                else:
+                    compile_log("\tSkipping copy (reason: already exists)")
+
+                # Resize where we can
+                for size in sizes:
+                    size = int(size)
+                    new_name = os.path.splitext(file.get_output_filename())[0] + "_" + str(size) + "px.jpg"
+                    #Don't thumbnail if it would be larger than the actual image
+                    if (size >= img.width and size >= img.height) or size <= 0:
+                        compile_log("\tSkipping size: " + str(size) + "px (reason: out of range)")
+                        continue
+                    #Skip if already processed
+                    if os.path.isfile(new_name):
+                        compile_log("\tSkipping size: " + str(size) + "px (reason: already exists)")
+                        continue
+
+                    compile_log("\tDownscaled to: " + str(size) + "px")
+                    # Thumbnail it
+                    new_img = img.copy()
+                    new_img.thumbnail((size, size), Image.ANTIALIAS)
+                    new_img.save(new_name, quality = 80, optimize = True)
+                    new_img.close()
                 img.close()
-        return
     def copy_unknown_files(self):
         """Copies all files that could not be identified as html, images, css, or JS"""
         files = self.get_files()
         for file in files:
             if file.type == FileType.other:
-                print("[Copy] " + file.output.full_path)
+                compile_log("Copying: " + file.get_output_filename())
                 file.copy_to_output()
+                compile_log("\tCopied!")
     def template(self, filename):
         """Creates a template from the specified (relative) filename"""
         return Template(self, self._resolve_input_filename(filename))
@@ -229,6 +260,7 @@ class Template:
     def __init__(self, compiler, filename):
         self.compiler = compiler
         self.filename = filename
+        compile_log("Parsing template: " + filename)
         html, blocks = _loadTemplate(filename)
         self._block_names = blocks
         self.rawHtml = html
@@ -237,6 +269,7 @@ class Template:
             self.placeholders[block] = "" # Fill in the blanks
         
         self.file_obj = FileObject(FileType.html, self.filename, self.compiler)
+        compile_log("\tTemplate parsed.")
     def copy(self):
         """Copies this template instance so it can be reused"""
         return copy.deepcopy(self)
@@ -336,7 +369,7 @@ class Template:
 
         #And save
         f = open(output_path.full_path, "wb")
-        print("[Saved] " + output_path.full_path)
+        compile_log("Saving compiled template: " + output_path.full_path)
         f.write(u'\ufeff'.encode("utf8", "ignore"))
         f.write(as_str.encode("utf8", "ignore"))
         f.flush()

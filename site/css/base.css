@@ -1,10 +1,19 @@
-﻿        /*light blue: rgb(0, 212, 254); other is rgb(0, 172, 234);*/
-        html, body, div, a, p, h1, h2, h3, h4, h5, h6 {
+﻿        html, body, div, a, p, h1, h2, h3, h4, h5, h6 {
             max-width: 100%;
             overflow-x: hidden;
         }
+		/* Let the pretty fonts stay */
+        body {
+            font-family: Raleway, Helvetica, Arial, Sans-Serif;
+            transition: opacity 0.5s ease;
+        }
 		
-		/*Animated background gradient*/
+		/*Don't underline anchor tags*/
+        a {
+            text-decoration: none;
+        }
+		
+		/*Animated background gradient -- not in use*/
 		.animated-background {
 			background: linear-gradient(270deg, #ffffff, #eeeeee);
 			background-size: 200% 200%;
@@ -23,10 +32,12 @@
 			}
 		}
 		
+		/* The animation for the charity links at the top of the page */
 		.sis-charity-links {
 			transition: opacity 200ms ease;
 		}
 		
+		/* Links with no fancy click/hover color changes*/
 		.silent-link {
 			color: black;
 		}
@@ -56,6 +67,7 @@
 			margin: 2.5rem auto 0;
 		}
 		
+		/* To put quotes in a block */
 		blockquote {
 			background-color: lightgray;
 			padding: 5px;
@@ -72,6 +84,7 @@
 			font-size: 1.2em;
 		}
 
+		/* The page header area's layout */
         .header-background {
             background-image: url("/global_resources/header_background.jpg");
             background-size: cover;
@@ -80,6 +93,14 @@
 		.header-pre {
 			margin-top: 4rem;
 		}
+
+        .header-text {
+            color: rgb(0, 212, 254);
+            text-align: center;
+            transition: transform .5s, text-shadow 0.5s;
+            opacity: 0.99;
+        }
+		
 		.header-post {
 			margin-bottom: 3rem;
 		}
@@ -92,71 +113,7 @@
 			text-align: center;
 		}
 		
-		.section-header {
-			margin-top: 1rem;
-			margin-bottom: 1rem;
-			text-align: center;
-		}
-		
-		.section-content {
-			text-align: center;
-		}
-		
-        body {
-            font-family: Raleway, Helvetica, Arial, Sans-Serif;
-            transition: opacity 0.5s ease;
-        }
-
-        a {
-            text-decoration: none;
-        }
-
-        .section-divider {
-            overflow-x: hidden;
-            z-index: -1000;
-            margin-top: -50px;
-            padding-top: 50px;
-            padding-left: 15px;
-            padding-right: 15px;
-            padding-bottom: 30px;
-            margin-left: -10px;
-            margin-right: -10px;
-            background-color: white;
-            box-shadow: 0px 5px 5px 0px rgba(171,171,171,1);
-            transition: box-shadow .5s ease;
-            padding: none;
-            color: transparent;
-            border-top: none;
-            border-bottom: 1px;
-            border-bottom-color: black;
-        }
-
-            .section-divider:hover {
-                box-shadow: 0px 5px 5px 0px rgba(30,30,30,1);
-            }
-
-        .centerable {
-            margin: auto;
-        }
-
-        .bottom-copyright {
-            color: darkgray;
-            text-align: center;
-        }
-
-        .text-content {
-            text-align: center;
-            margin: auto;
-            padding-left: 10px;
-            padding-right: 10px;
-        }
-
-        .header-text {
-            color: rgb(0, 212, 254);
-            text-align: center;
-            transition: transform .5s, text-shadow 0.5s;
-            opacity: 0.99;
-        }
+		/* The Navbar */
 		
 		.navbar-link {
             font-family: Raleway, Helvetica, Arial, Sans-Serif;
@@ -219,7 +176,62 @@
 				animation-timing-function: linear;
                 transform-origin: center center;
             }
+		
+		/* For all of the sections */
+		.section-header {
+			margin-top: 1rem;
+			margin-bottom: 1rem;
+			text-align: center;
+		}
+		
+		.section-content {
+			text-align: center;
+		}
+		
+		/* The shadowed page dividers */
+        .section-divider {
+            overflow-x: hidden;
+            z-index: -1000;
+            margin-top: -50px;
+            padding-top: 50px;
+            padding-left: 15px;
+            padding-right: 15px;
+            padding-bottom: 30px;
+            margin-left: -10px;
+            margin-right: -10px;
+            background-color: white;
+            box-shadow: 0px 5px 5px 0px rgba(171,171,171,1);
+            transition: box-shadow .5s ease;
+            padding: none;
+            color: transparent;
+            border-top: none;
+            border-bottom: 1px;
+            border-bottom-color: black;
+        }
 
+            .section-divider:hover {
+                box-shadow: 0px 5px 5px 0px rgba(30,30,30,1);
+            }
+
+		/* To force things to the center of the page */
+        .centerable {
+            margin: auto;
+        }
+
+		/* The color for the bottom of the page / its copyright*/
+        .bottom-copyright {
+            color: darkgray;
+            text-align: center;
+        }
+
+        .text-content {
+            text-align: center;
+            margin: auto;
+            padding-left: 10px;
+            padding-right: 10px;
+        }
+
+		/* Search box layout [==========][x] -- button directly attached */
         .input-with-button {
             width: 90%;
             max-width: 500px;
@@ -267,24 +279,66 @@
                 border: 1px solid rgb(0, 172, 234);
             }
 
+		/* A container for centering the twitter box */
         .tw-align-center {
             width: 100%;
             max-width: 520px;
         }
+		
+		/* For tight fitting collages
+		Taken from https://css-tricks.com/seamless-responsive-photo-grid/ */
+		.collage {
+			/* Prevent vertical gaps */
+			line-height: 0;
+			column-count: 5;
+			column-gap: 0px;  
+		}
 
+		.collage img {
+			/* Just in case there are inline attributes */
+			width: 100% !important;
+			height: auto !important;
+		}
+		
+		/* Responsive stuff for collages */
+		@media (max-width: 1280px) {
+			.collage {
+				column-count: 4;
+			}
+		}
+		@media (max-width: 1024px) {
+			.collage {
+				column-count: 3;
+			}
+		}
+		@media (max-width: 768px) {
+			.collage {
+				column-count: 2;
+			}
+		}
+		@media (max-width: 480px) {
+			.collage {
+				column-count: 1;
+			}
+		}
+
+		/* Responsive stuff for large desktop screens */
         @media screen and (min-width: 769px) {
             .text-content {
                 max-width: 70%;
             }
 			
+			/* Once the home button is hidden, we show the logo */
 			.navbar-img-container {
 				width: 75px;
 				height: auto;
 			}
 			
+			/* IDK but the layout broke on IE (more than usual) when I removed this */
 			.navbar-link {
 			}
 
+			/* The home button is hidden and the img-container is shown */
 			.navbar-home-btn {
 				display: none;
 			}
