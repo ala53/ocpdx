@@ -131,7 +131,7 @@
 			}
 
         .navbar-outer {
-            z-index: 99999;
+            z-index: 100;
             border-bottom: 1px solid;
             border-bottom-color: gray;
             border-top: 1px solid;
@@ -290,7 +290,7 @@
 		.collage {
 			/* Prevent vertical gaps */
 			line-height: 0;
-			column-count: 5;
+			column-count: 4;
 			column-gap: 0px;  
 		}
 
@@ -303,15 +303,10 @@
 		/* Responsive stuff for collages */
 		@media (max-width: 1280px) {
 			.collage {
-				column-count: 4;
-			}
-		}
-		@media (max-width: 1024px) {
-			.collage {
 				column-count: 3;
 			}
 		}
-		@media (max-width: 768px) {
+		@media (max-width: 1024px) {
 			.collage {
 				column-count: 2;
 			}

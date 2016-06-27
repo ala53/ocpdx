@@ -316,13 +316,16 @@ class Template:
             resolved = os.path.abspath(os.path.join(self.file_obj.input.dir, file))
             #Check if we know where the file is / if we cached it
             if not resolved in self.compiler.css_cache: 
-                #print("\t -> CSS file not found: " + resolved + ", ignoring
-                #b/c probably not local file")
+                #compile_log("\tNot inlining: " + resolved + " (reason: not found, probably external site reference)")
+                continue
+            #Check if no-inline tag
+            if css.get("noinline") == "true":
+                compile_log("\tNot inlining: " + resolved + " (reason: noinline attribute set to true)")
                 continue
             #Get the actual CSS data
             resolvedCss = self.compiler.css_cache[resolved]
             if len(resolvedCss) > maxInliningTextSize: 
-                print("\t -> Not inlining " + resolved + ".  Reason: too large")
+                compile_log("\tNot inlining: " + resolved + " (reason: too large)")
                 continue
             #print("\t -> [Inlined] CSS File: " + scriptFile + " resolved as "
             #+ resolved)
@@ -345,13 +348,16 @@ class Template:
             resolved = os.path.abspath(os.path.join(self.file_obj.input.dir, file))
             #Check if we can resolve the file
             if not resolved in self.compiler.js_cache: 
-                #print("\t -> JS file not found: " + resolved + ", ignoring b/c
-                #probably not local file")
+                #compile_log("\tNot inlining: " + resolved + " (reason: not found, probably external site reference)")
                 continue
             resolvedJs = self.compiler.js_cache[resolved]
+            #Check if no-inline tag
+            if js.get("noinline") == "true":
+                compile_log("\tNot inlining: " + resolved + " (reason: noinline attribute set to true)")
+                continue
             #Check if it is inlinable
             if len(resolvedJs) > maxInliningTextSize: 
-                print("\t -> Not inlining " + resolved + ".  Reason: too large")
+                compile_log("\tNot inlining: " + resolved + " (reason: too large)")
                 continue
             #print("\t -> [Inlined] JS File: " + scriptFile + " resolved as " +
             #resolved)
