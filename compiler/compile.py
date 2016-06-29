@@ -53,5 +53,5 @@ def compile_news_articles(template, compiler):
     #Only put the last 20 in the news
     template.copy().inject("title", "News").inject("content", compiler.template("news.html").inject("articles", article_infos[0:20])).save("news.html")
     #But have an archive with all of them
-    template.copy().inject("title", "News").inject("content", compiler.template("news_archive.html").inject("articles", article_infos[21:])).save("news_archive.html")
+    template.copy().inject("title", "News").inject("content", compiler.template("news_archive.html").inject("articles", article_infos)).save("news_archive.html")
 compile(compiler.Compiler())
